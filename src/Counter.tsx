@@ -1,9 +1,10 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './App.css';
 import s from "./Counter.module.css"
 import Input from "./Input";
 import Button from "./Button";
-import {debuglog} from "util";
+import {restoreState, saveState} from "./localstorage";
+
 
 export type CounterStatusType = 'counter' | 'setting' | 'error'
 
@@ -13,6 +14,19 @@ function Counter() {
     const [value, setValue] = useState(startValue)
     const [status, setStatus] = useState<CounterStatusType>('counter')
 
+    const save = () => {
+        saveState<number>('start-value', startValue)
+        saveState<number>('max-value', maxtValue)
+    }
+
+    const restore = () => {
+        // setValue()
+        const newStartValue= restoreState('start-value',startValue)
+        const newMaxValue= restoreState('max-value',maxtValue)
+        setStartValue(newStartValue)
+        setMaxValue(newMaxValue)
+    }
+    useEffect(()=>restore(),[])
     return (
         <div className={s.counterWrapper}>
             <div className={s.settings}>
@@ -23,7 +37,7 @@ function Counter() {
                            status={status} setStatus={setStatus} setStartValue={setStartValue}/>
                 </div>
                 <div className={s.block}>
-                    <Button title={'set'} value={value} setValue={setValue} status={status} setStatus={setStatus}  start={startValue}/>
+                    <Button title={'set'} value={value} setValue={setValue} status={status} setStatus={setStatus} save={save} start={startValue}/>
                 </div>
             </div>
             <div className={s.settings}>

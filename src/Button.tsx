@@ -7,6 +7,7 @@ interface IButtonProps {
     title:string,
     setValue:(value:number)=>void,
     setStatus:(value:CounterStatusType)=>void,
+    save?:()=>void,
     setStartValue?:(value:number)=>void,
     value:number,
     start?:number,
@@ -29,6 +30,7 @@ function Button({title,setValue,value,start,maxtValue,status,setStatus,...restPr
         if (title==='set'){
                         setStatus('counter')
             start&&setValue(start)
+            restProps.save&&restProps.save()
         }
     }
 
