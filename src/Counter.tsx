@@ -25,15 +25,16 @@ function Counter() {
         const newMaxValue= restoreState('max-value',maxtValue)
         setStartValue(newStartValue)
         setMaxValue(newMaxValue)
+        setValue(newStartValue)
     }
     useEffect(()=>restore(),[])
     return (
         <div className={s.counterWrapper}>
             <div className={s.settings}>
                 <div className={s.block}>
-                    <Input maxValue={maxtValue} setValue={setMaxValue} title={'max value'} setStatus={setStatus}
+                    <Input startValue={startValue} maxValue={maxtValue} setValue={setMaxValue} title={'max value'} setStatus={setStatus}
                            status={status} setStartValue={setStartValue}/>
-                    <Input value={startValue} setValue={setValue} maxValue={maxtValue} title={'start value'}
+                    <Input startValue={startValue} value={startValue} setValue={setValue} maxValue={maxtValue} title={'start value'}
                            status={status} setStatus={setStatus} setStartValue={setStartValue}/>
                 </div>
                 <div className={s.block}>
@@ -43,7 +44,7 @@ function Counter() {
             <div className={s.settings}>
                 <div className={s.block}>
              <span className={value === maxtValue ? `${s.currentValue} ${s.disabled}` : s.currentValue}>
-                 {status === 'counter' ? value : 'enter value and press "set" '}
+                 {status === 'counter' ? value :status === 'setting'?'enter value and press "set" ':'Incorrect value!'}
 
              </span>
                 </div>

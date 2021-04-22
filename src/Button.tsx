@@ -34,9 +34,21 @@ function Button({title,setValue,value,start,maxtValue,status,setStatus,...restPr
         }
     }
 
+    const disabledButton=()=>{
+        switch (title) {
+            case'set':
+                return status==='error'||status==='counter';
+            case'inc':
+                return value===maxtValue
+            default:
+                return false
+        }
+    }
+
     return (
+
         <div className={s.buttonWrapper}>
-          <button className={s.title} onClick={onClickHandler} disabled={value===maxtValue&&title!='set'||status==='setting'&&title!='set'||status==='error'}>{title}</button>
+          <button className={s.title} onClick={onClickHandler} disabled={disabledButton()}>{title}</button>
         </div>
     );
 }
